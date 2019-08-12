@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
+//using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Domain.Seedwork;
 using Ordering.Infrastructure;
@@ -17,9 +17,9 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.Infrastructure
         public const string DEFAULT_SCHEMA = "ordering";
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
-        public DbSet<PaymentMethod> Payments { get; set; }
-        public DbSet<Buyer> Buyers { get; set; }
-        public DbSet<CardType> CardTypes { get; set; }
+        //public DbSet<PaymentMethod> Payments { get; set; }
+        //public DbSet<Buyer> Buyers { get; set; }
+        //public DbSet<CardType> CardTypes { get; set; }
         public DbSet<OrderStatus> OrderStatus { get; set; }
 
         private readonly IMediator _mediator;
@@ -37,12 +37,12 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.Infrastructure
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new ClientRequestEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new PaymentMethodEntityTypeConfiguration());
+            //modelBuilder.ApplyConfiguration(new PaymentMethodEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderItemEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new CardTypeEntityTypeConfiguration());
+            //modelBuilder.ApplyConfiguration(new CardTypeEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new OrderStatusEntityTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new BuyerEntityTypeConfiguration()); 
+            //modelBuilder.ApplyConfiguration(new BuyerEntityTypeConfiguration()); 
         }
 
         public async Task<bool> SaveEntitiesAsync(CancellationToken cancellationToken = default(CancellationToken))

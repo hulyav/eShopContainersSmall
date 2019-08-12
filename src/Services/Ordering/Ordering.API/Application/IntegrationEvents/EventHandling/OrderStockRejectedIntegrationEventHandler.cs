@@ -14,7 +14,7 @@
         {
             _orderRepository = orderRepository;
         }
-
+        //TODO hulyav burada aslinda cart.api ile mi konusuyor
         public async Task Handle(OrderStockRejectedIntegrationEvent @event)
         {
             var orderToUpdate = await _orderRepository.GetAsync(@event.OrderId);

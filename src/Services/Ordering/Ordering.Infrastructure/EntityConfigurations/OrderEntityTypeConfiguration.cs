@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
+//using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure;
 using System;
@@ -35,16 +35,16 @@ namespace Ordering.Infrastructure.EntityConfigurations
             //Set as field (New since EF 1.1) to access the OrderItem collection property through its field
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
 
-            orderConfiguration.HasOne<PaymentMethod>()
-                .WithMany()
-                .HasForeignKey("PaymentMethodId")
-                .IsRequired(false)
-                .OnDelete(DeleteBehavior.Restrict);
+            //orderConfiguration.HasOne<PaymentMethod>()
+            //    .WithMany()
+            //    .HasForeignKey("PaymentMethodId")
+            //    .IsRequired(false)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
-            orderConfiguration.HasOne<Buyer>()
-                .WithMany()
-                .IsRequired(false)
-                .HasForeignKey("BuyerId");
+            //orderConfiguration.HasOne<Buyer>()
+            //    .WithMany()
+            //    .IsRequired(false)
+            //    .HasForeignKey("BuyerId");
 
             orderConfiguration.HasOne(o => o.OrderStatus)
                 .WithMany()

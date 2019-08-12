@@ -91,16 +91,16 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Controllers
             return Ok(orders);
         }
 
-        [Route("cardtypes")]
-        [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<CardType>), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> GetCardTypes()
-        {
-            var cardTypes = await _orderQueries
-                .GetCardTypesAsync();
+        //[Route("cardtypes")]
+        //[HttpGet]
+        //[ProducesResponseType(typeof(IEnumerable<CardType>), (int)HttpStatusCode.OK)]
+        //public async Task<IActionResult> GetCardTypes()
+        //{
+        //    var cardTypes = await _orderQueries
+        //        .GetCardTypesAsync();
 
-            return Ok(cardTypes);
-        }        
+        //    return Ok(cardTypes);
+        //}        
     }
 }
 

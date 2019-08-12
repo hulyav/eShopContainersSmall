@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Collections;
 using Ordering.API.Application.Models;
-
+//TODO ##hulyav buradan odeme detaylarini cikar. Onlari buyer.api ile halletsin
 namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
 {
     // DDD and CQRS patterns comment: Note that it is recommended to implement immutable Commands

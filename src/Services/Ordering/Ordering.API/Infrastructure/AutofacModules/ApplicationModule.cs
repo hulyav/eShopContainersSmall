@@ -2,7 +2,7 @@
 using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Application.Queries;
-using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
+//using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Idempotency;
 using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Repositories;
@@ -30,9 +30,9 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure.Autof
                 .As<IOrderQueries>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<BuyerRepository>()
-                .As<IBuyerRepository>()
-                .InstancePerLifetimeScope();
+            //builder.RegisterType<BuyerRepository>()
+            //    .As<IBuyerRepository>()
+            //    .InstancePerLifetimeScope();
 
             builder.RegisterType<OrderRepository>()
                 .As<IOrderRepository>()

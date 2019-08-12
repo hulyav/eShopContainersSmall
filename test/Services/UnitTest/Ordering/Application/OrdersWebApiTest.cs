@@ -122,20 +122,20 @@ namespace UnitTest.Ordering.Application
             Assert.Equal(actionResult.StatusCode, (int)System.Net.HttpStatusCode.OK);
         }
 
-        [Fact]
-        public async Task Get_cardTypes_success()
-        {
-            //Arrange
-            var fakeDynamicResult = Enumerable.Empty<CardType>();
-            _orderQueriesMock.Setup(x => x.GetCardTypesAsync())
-                .Returns(Task.FromResult(fakeDynamicResult));
+        //[Fact]
+        //public async Task Get_cardTypes_success()
+        //{
+        //    //Arrange
+        //    var fakeDynamicResult = Enumerable.Empty<CardType>();
+        //    _orderQueriesMock.Setup(x => x.GetCardTypesAsync())
+        //        .Returns(Task.FromResult(fakeDynamicResult));
 
-            //Act
-            var orderController = new OrdersController(_mediatorMock.Object, _orderQueriesMock.Object, _identityServiceMock.Object);
-            var actionResult = await orderController.GetCardTypes() as OkObjectResult;
+        //    //Act
+        //    var orderController = new OrdersController(_mediatorMock.Object, _orderQueriesMock.Object, _identityServiceMock.Object);
+        //    var actionResult = await orderController.GetCardTypes() as OkObjectResult;
 
-            //Assert
-            Assert.Equal(actionResult.StatusCode, (int)System.Net.HttpStatusCode.OK);
-        }
+        //    //Assert
+        //    Assert.Equal(actionResult.StatusCode, (int)System.Net.HttpStatusCode.OK);
+        //}
     }
 }

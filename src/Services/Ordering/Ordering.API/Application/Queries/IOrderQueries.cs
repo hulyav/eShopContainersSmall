@@ -9,6 +9,6 @@
 
         Task<IEnumerable<OrderSummary>> GetOrdersAsync();
 
-        Task<IEnumerable<CardType>> GetCardTypesAsync();
+        //Task<IEnumerable<CardType>> GetCardTypesAsync();
     }
 }

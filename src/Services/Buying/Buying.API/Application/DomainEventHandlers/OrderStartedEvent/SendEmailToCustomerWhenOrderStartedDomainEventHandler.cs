@@ -4,9 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 
 using MediatR;
-using Ordering.Domain.Events;
+using Buying.Domain.Events;
 
-namespace Ordering.API.Application.DomainEventHandlers.OrderStartedEvent
+namespace Buying.API.Application.DomainEventHandlers.OrderStartedEvent
 {
     public class SendEmailToCustomerWhenOrderStartedDomainEventHandler
                    //: IAsyncNotificationHandler<OrderStartedDomainEvent>

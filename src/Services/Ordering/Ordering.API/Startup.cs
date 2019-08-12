@@ -4,6 +4,7 @@
     using Autofac;
     using Autofac.Extensions.DependencyInjection;
     using global::Ordering.API.Application.IntegrationEvents;
+    using global::Ordering.API.Application.IntegrationEvents.EventHandling;
     using global::Ordering.API.Application.IntegrationEvents.Events;
     using global::Ordering.API.Infrastructure.Filters;
     using global::Ordering.API.Infrastructure.Middlewares;
@@ -255,12 +256,15 @@
         {
             var eventBus = app.ApplicationServices.GetRequiredService<BuildingBlocks.EventBus.Abstractions.IEventBus>();
 
+            eventBus.Subscribe<VerifiedOrAddedPaymentMethodIntegrationEvent, VerifiedOrAddedPaymentMethodIntegrationEventHandler>();
             eventBus.Subscribe<UserCheckoutAcceptedIntegrationEvent, IIntegrationEventHandler<UserCheckoutAcceptedIntegrationEvent>>();
             eventBus.Subscribe<GracePeriodConfirmedIntegrationEvent, IIntegrationEventHandler<GracePeriodConfirmedIntegrationEvent>>();
             eventBus.Subscribe<OrderStockConfirmedIntegrationEvent, IIntegrationEventHandler<OrderStockConfirmedIntegrationEvent>>();
             eventBus.Subscribe<OrderStockRejectedIntegrationEvent, IIntegrationEventHandler<OrderStockRejectedIntegrationEvent>>();
             eventBus.Subscribe<OrderPaymentFailedIntegrationEvent, IIntegrationEventHandler<OrderPaymentFailedIntegrationEvent>>();
             eventBus.Subscribe<OrderPaymentSuccededIntegrationEvent, IIntegrationEventHandler<OrderPaymentSuccededIntegrationEvent>>();
+            //TODO Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands.CreateOrderCommandHandler da private readonly IOrderingIntegrationEventService _orderingIntegrationEventService; kullanarak event bus alamiyorsam
+            //eventBus.Subscribe<OrderPaymentSuccededIntegrationEvent, IIntegrationEventHandler<OrderPaymentSuccededIntegrationEvent>>();
         }
 
         private void ConfigureAuthService(IServiceCollection services)
@@ -330,6 +334,7 @@
             }
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            services.AddTransient<VerifiedOrAddedPaymentMethodIntegrationEventHandler>();
         }
     }
 }

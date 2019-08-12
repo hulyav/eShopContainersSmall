@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands.CreateOrderCommand;
-
+//TODO ##hulyav buradan card type ile ilgili olanlari buyer api ya devret
 namespace Ordering.API.Application.Validations
 {
     public class CreateOrderCommandValidator : AbstractValidator<CreateOrderCommand>

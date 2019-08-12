@@ -17,6 +17,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="Application\DomainEventHandlers\OrderStartedEvent\SendEmailToCustomerWhenOrderStartedDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderStartedEvent\ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
     <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
@@ -54,6 +59,10 @@
     <None Update="Setup\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\DomainEventHandlers\OrderStartedEvent\" />
   </ItemGroup>
 
 </Project>

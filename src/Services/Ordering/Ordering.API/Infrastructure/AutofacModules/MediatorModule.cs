@@ -3,7 +3,8 @@ using Autofac.Core;
 using FluentValidation;
 using MediatR;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands;
-using Ordering.API.Application.DomainEventHandlers.OrderStartedEvent;
+using Ordering.API.Application.DomainEventHandlers.OrderGracePeriodConfirmed;
+//using Ordering.API.Application.DomainEventHandlers.OrderStartedEvent;
 using Ordering.API.Application.Validations;
 using Ordering.API.Infrastructure.Behaviors;
 using System.Collections.Generic;
@@ -24,8 +25,12 @@ namespace Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure.Autof
                 .AsClosedTypesOf(typeof(IRequestHandler<,>));
 
             // Register the DomainEventHandler classes (they implement INotificationHandler<>) in assembly holding the Domain Events
-            builder.RegisterAssemblyTypes(typeof(ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler).GetTypeInfo().Assembly)
+            //builder.RegisterAssemblyTypes(typeof(ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler).GetTypeInfo().Assembly)
+            //    .AsClosedTypesOf(typeof(INotificationHandler<>));
+
+            builder.RegisterAssemblyTypes(typeof(OrderStatusChangedToAwaitingValidationDomainEventHandler).GetTypeInfo().Assembly)
                 .AsClosedTypesOf(typeof(INotificationHandler<>));
+
 
             // Register the Command's Validators (Validators based on FluentValidation library)
             builder

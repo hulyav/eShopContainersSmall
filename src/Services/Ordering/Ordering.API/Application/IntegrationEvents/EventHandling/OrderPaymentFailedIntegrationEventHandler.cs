@@ -15,6 +15,7 @@
             _orderRepository = orderRepository;
         }
 
+        //TODO burada buyer api@i cagirip ona gore hareket etmek lazim. Ya da bu event buyer api tarafindan raise olmali
         public async Task Handle(OrderPaymentFailedIntegrationEvent @event)
         {
             var orderToUpdate = await _orderRepository.GetAsync(@event.OrderId);

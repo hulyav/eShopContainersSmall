@@ -1,15 +1,17 @@
 ﻿using Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands;
 using Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure.Services;
-using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.BuyerAggregate;
+using Microsoft.eShopOnContainers.Services.Buying.Domain.AggregatesModel.BuyerAggregate;
 using Microsoft.eShopOnContainers.Services.Ordering.Domain.AggregatesModel.OrderAggregate;
 using Moq;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BuyerAggregate = Microsoft.eShopOnContainers.Services.Buying.Domain.AggregatesModel.BuyerAggregate;
 
 
 namespace UnitTest.Ordering.Application
 {
+    using global::Ordering.API.Application.IntegrationEvents;
     using global::Ordering.API.Application.Models;
     using MediatR;
     using System.Collections;
@@ -22,6 +24,7 @@ namespace UnitTest.Ordering.Application
         private readonly Mock<IOrderRepository> _orderRepositoryMock;
         private readonly Mock<IIdentityService> _identityServiceMock;
         private readonly Mock<IMediator> _mediator;
+        private readonly Mock<IOrderingIntegrationEventService> _orderingIntegrationEventService;
 
         public NewOrderRequestHandlerTest()
         {
@@ -29,6 +32,7 @@ namespace UnitTest.Ordering.Application
             _orderRepositoryMock = new Mock<IOrderRepository>();
             _identityServiceMock = new Mock<IIdentityService>();
             _mediator = new Mock<IMediator>();
+            _orderingIntegrationEventService = new Mock<IOrderingIntegrationEventService>();
         }
 
         [Fact]
@@ -48,7 +52,8 @@ namespace UnitTest.Ordering.Application
             _identityServiceMock.Setup(svc => svc.GetUserIdentity()).Returns(buyerId);
 
             //Act
-            var handler = new CreateOrderCommandHandler(_mediator.Object, _orderRepositoryMock.Object, _identityServiceMock.Object);
+            var handler = new CreateOrderCommandHandler(_mediator.Object, _orderRepositoryMock.Object, 
+                _identityServiceMock.Object, _orderingIntegrationEventService.Object);
             var cltToken = new System.Threading.CancellationToken();
             var result = await handler.Handle(fakeOrderCmd, cltToken);
 
@@ -60,12 +65,12 @@ namespace UnitTest.Ordering.Application
         public void Handle_throws_exception_when_no_buyerId()
         {
             //Assert
-            Assert.Throws<ArgumentNullException>(() => new Buyer(string.Empty));
+            Assert.Throws<ArgumentNullException>(() => new BuyerAggregate.Buyer(string.Empty));
         }
 
-        private Buyer FakeBuyer()
+        private BuyerAggregate.Buyer FakeBuyer()
         {
-            return new Buyer(Guid.NewGuid().ToString());
+            return new BuyerAggregate.Buyer(Guid.NewGuid().ToString());
         }
 
         private Order FakeOrder()

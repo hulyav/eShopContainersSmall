@@ -1,6 +1,10 @@
-﻿namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
+﻿//TODO ##hulyav buradan card ile ilgili dettaylari cikar
+namespace Microsoft.eShopOnContainers.Services.Ordering.API.Application.Commands
 {
+    using Microsoft.eShopOnContainers.BuildingBlocks.EventBus.Abstractions;
     using Domain.AggregatesModel.OrderAggregate;
+    using global::Ordering.API.Application.IntegrationEvents;
+    using global::Ordering.API.Application.IntegrationEvents.Events;
     using MediatR;
     using Microsoft.eShopOnContainers.Services.Ordering.API.Infrastructure.Services;
     using Microsoft.eShopOnContainers.Services.Ordering.Infrastructure.Idempotency;
@@ -15,13 +19,16 @@
         private readonly IOrderRepository _orderRepository;
         private readonly IIdentityService _identityService;
         private readonly IMediator _mediator;
+        private readonly IOrderingIntegrationEventService _orderingIntegrationEventService;
 
         // Using DI to inject infrastructure persistence Repositories
-        public CreateOrderCommandHandler(IMediator mediator, IOrderRepository orderRepository, IIdentityService identityService)
+        public CreateOrderCommandHandler(IMediator mediator, IOrderRepository orderRepository, IIdentityService identityService,
+            IOrderingIntegrationEventService orderingIntegrationEventService)
         {
             _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _identityService = identityService ?? throw new ArgumentNullException(nameof(identityService));
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _orderingIntegrationEventService = orderingIntegrationEventService ?? throw new ArgumentNullException(nameof(orderingIntegrationEventService));
         }
 
         public async Task<bool> Handle(CreateOrderCommand message, CancellationToken cancellationToken)
@@ -39,6 +46,10 @@
             }
 
              _orderRepository.Add(order);
+
+            // Send Integration event to clean basket once basket is converted to Order and before starting with the order creation process
+            var orderCreatedIntegrationEvent = new OrderCreatedIntegrationEvent(order.Id, message.UserId, message.CardTypeId, message.CardNumber, message.CardSecurityNumber, message.CardHolderName, message.CardExpiration);
+            await _orderingIntegrationEventService.PublishThroughEventBusAsync(orderCreatedIntegrationEvent);
 
             return await _orderRepository.UnitOfWork
                 .SaveEntitiesAsync();

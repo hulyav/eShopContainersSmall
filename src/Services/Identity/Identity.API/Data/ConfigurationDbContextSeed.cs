@@ -22,6 +22,7 @@ namespace Microsoft.eShopOnContainers.Services.Identity.API.Data
                 {"LocationsApi", configuration.GetValue<string>("LocationApiClient")},
                 {"MarketingApi", configuration.GetValue<string>("MarketingApiClient")},
                 {"BasketApi", configuration.GetValue<string>("BasketApiClient")},
+                {"BuyingApi", configuration.GetValue<string>("BuyerApiClient")},
                 {"OrderingApi", configuration.GetValue<string>("OrderingApiClient")}
             };
 

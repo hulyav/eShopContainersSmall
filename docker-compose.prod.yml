@@ -64,11 +64,36 @@ services:
       - MarketingApiClient=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5110
       - BasketApiClient=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5103
       - OrderingApiClient=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5102
+      - BuyingApiClient=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5115
       - UseCustomizationData=True  
       - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
       - OrchestratorType=${ORCHESTRATOR_TYPE}
     ports:
       - "5105:80"
+
+buying.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString=${ESHOP_AZURE_BUYING_DB:-Server=sql.data;Database=Microsoft.eShopOnContainers.Services.BuyingDb;User Id=sa;Password=Pass@word}
+      - identityUrl=http://identity.api              #Local: You need to open your local dev-machine firewall at range 5100-5110.
+      - IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
+      - EventBusConnection=${ESHOP_AZURE_SERVICE_BUS:-rabbitmq}
+      - EventBusUserName=${ESHOP_SERVICE_BUS_USERNAME}
+      - EventBusPassword=${ESHOP_SERVICE_BUS_PASSWORD}          
+      - UseCustomizationData=True
+      - AzureServiceBusEnabled=False
+      - CheckUpdateTime=30000
+      - GracePeriodTime=1
+      - ApplicationInsights__InstrumentationKey=${INSTRUMENTATION_KEY}
+      - OrchestratorType=${ORCHESTRATOR_TYPE}
+      - UseLoadTest=${USE_LOADTEST:-False}
+
+      - SpaClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5104
+      - MvcClient=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5100              #Local: You need to open your local dev-machine firewall at range 5100-5110. 
+    ports:
+      - "5115:80"
+
 
   ordering.api:
     environment:
@@ -138,12 +163,14 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5101
       - OrderingUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5102
+      - BuyingUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5115
       - IdentityUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5105              #Local: You need to open your local dev-machine firewall at range 5100-5105.  at range 5100-5105. 
       - BasketUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5103
       - MarketingUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5110
       - LocationsUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5109
       - CatalogUrlHC=http://catalog.api/hc
       - OrderingUrlHC=http://ordering.api/hc
+      - BuyingUrlHC=http://buying.api/hc
       - IdentityUrlHC=http://identity.api/hc           
       - BasketUrlHC=http://basket.api/hc
       - MarketingUrlHC=http://marketing.api/hc
@@ -160,12 +187,14 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogUrl=http://catalog.api
       - OrderingUrl=http://ordering.api
+      - BuyerUrl=http://buying.api
       - BasketUrl=http://basket.api
       - LocationsUrl=http://locations.api
       - IdentityUrl=http://${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP}:5105   #Local:  Use 10.0.75.1 in a "Docker for Windows" environment, if using "localhost" from browser. #Remote: Use ${ESHOP_PROD_EXTERNAL_DNS_NAME_OR_IP} if using external IP or DNS name from browser.  
       - MarketingUrl=http://marketing.api                                                  
       - CatalogUrlHC=http://catalog.api/hc
       - OrderingUrlHC=http://ordering.api/hc
+      - BuyingUrlHC=http://buying.api/hc
       - IdentityUrlHC=http://identity.api/hc             
       - BasketUrlHC=http://basket.api/hc
       - MarketingUrlHC=http://marketing.api/hc
@@ -183,6 +212,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - CatalogUrl=http://catalog.api/hc
       - OrderingUrl=http://ordering.api/hc
+      - BuyerUrl=http://buying.api/hc
       - BasketUrl=http://basket.api/hc
       - IdentityUrl=http://identity.api/hc
       - LocationsUrl=http://locations.api/hc

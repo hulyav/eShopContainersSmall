@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Ordering.API.Application.DomainEventHandlers.BuyerAndPaymentMethodVerified
 {
-    public class UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler 
+    public class UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler
                    : INotificationHandler<BuyerAndPaymentMethodVerifiedDomainEvent>
     {
-        private readonly IOrderRepository _orderRepository;        
-        private readonly ILoggerFactory _logger;        
+        private readonly IOrderRepository _orderRepository;
+        private readonly ILoggerFactory _logger;
 
         public UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler(
-            IOrderRepository orderRepository, ILoggerFactory logger)            
+            IOrderRepository orderRepository, ILoggerFactory logger)
         {
-            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));            
+            _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -27,11 +27,11 @@ namespace Ordering.API.Application.DomainEventHandlers.BuyerAndPaymentMethodVeri
         public async Task Handle(BuyerAndPaymentMethodVerifiedDomainEvent buyerPaymentMethodVerifiedEvent, CancellationToken cancellationToken)
         {
             var orderToUpdate = await _orderRepository.GetAsync(buyerPaymentMethodVerifiedEvent.OrderId);
-            orderToUpdate.SetBuyerId(buyerPaymentMethodVerifiedEvent.Buyer.Id);
-            orderToUpdate.SetPaymentId(buyerPaymentMethodVerifiedEvent.Payment.Id);                                                
+            orderToUpdate.SetBuyerId(buyerPaymentMethodVerifiedEvent.BuyerId);
+            orderToUpdate.SetPaymentId(buyerPaymentMethodVerifiedEvent.PaymentId);
 
             _logger.CreateLogger(nameof(UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler))
-                .LogTrace($"Order with Id: {buyerPaymentMethodVerifiedEvent.OrderId} has been successfully updated with a payment method id: { buyerPaymentMethodVerifiedEvent.Payment.Id }");                        
+                .LogTrace($"Order with Id: {buyerPaymentMethodVerifiedEvent.OrderId} has been successfully updated with a payment method id: { buyerPaymentMethodVerifiedEvent.PaymentId }");
         }
-    }  
+    }
 }

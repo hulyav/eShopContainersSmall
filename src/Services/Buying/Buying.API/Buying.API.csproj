@@ -1,0 +1,92 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <WarningLevel>0</WarningLevel>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Application\Commands\CancelOrderCommand.cs" />
+    <Compile Remove="Application\Commands\CreateOrderCommand.cs" />
+    <Compile Remove="Application\Commands\CreateOrderCommandHandler.cs" />
+    <Compile Remove="Application\Commands\ShipOrderCommand.cs" />
+    <Compile Remove="Application\Commands\ShipOrderCommandHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\BuyerAndPaymentMethodVerified\UpdateOrderWhenBuyerAndPaymentMethodVerifiedDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderGracePeriodConfirmed\OrderStatusChangedToAwaitingValidationDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderPaid\OrderStatusChangedToPaidDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderStartedEvent\ValidateOrAddBuyerAggregateWhenOrderStartedDomainEventHandler.cs" />
+    <Compile Remove="Application\DomainEventHandlers\OrderStockConfirmed\OrderStatusChangedToStockConfirmedDomainEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\GracePeriodConfirmedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderPaymentFailedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderPaymentSuccededIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderStockConfirmedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\OrderStockRejectedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\EventHandling\UserCheckoutAcceptedIntegrationEventHandler.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\GracePeriodConfirmedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderPaymentFailedIntegrationEvent .cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderPaymentSuccededIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStartedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToAwaitingValidationIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToPaidIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStatusChangedToStockConfirmedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStockConfirmedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\OrderStockRejectedIntegrationEvent.cs" />
+    <Compile Remove="Application\IntegrationEvents\Events\UserCheckoutAcceptedIntegrationEvent.cs" />
+    <Compile Remove="Application\Validations\CancelOrderCommandValidator.cs" />
+    <Compile Remove="Application\Validations\CreateOrderCommandValidator.cs" />
+    <Compile Remove="Application\Validations\IdentifiedCommandValidator.cs" />
+    <Compile Remove="Application\Validations\ShipOrderCommandValidator.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Application\DomainEventHandlers\BuyerAndPaymentMethodVerified\" />
+    <Folder Include="Application\DomainEventHandlers\OrderGracePeriodConfirmed\" />
+    <Folder Include="Application\DomainEventHandlers\OrderPaid\" />
+    <Folder Include="Application\DomainEventHandlers\OrderStockConfirmed\" />
+    <Folder Include="Application\Validations\" />
+    <Folder Include="Setup\" />
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="4.2.1" />
+    <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="7.5.0" />
+    <PackageReference Include="MediatR" Version="4.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="4.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.2.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.DependencyCollector" Version="2.5.1" />
+    <PackageReference Include="Microsoft.ApplicationInsights.Kubernetes" Version="1.0.0-beta5" />
+    <PackageReference Include="Microsoft.ApplicationInsights.ServiceFabric" Version="2.0.1-beta1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="microsoft.entityframeworkcore.tools" Version="2.1.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
+    <PackageReference Include="Polly" Version="5.8.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUi" Version="2.2.0" />
+    <PackageReference Include="System.Reflection" Version="4.3.0" />
+    <PackageReference Include="System.ValueTuple" Version="4.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBusServiceBus\EventBusServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus\EventBus.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\IntegrationEventLogEF\IntegrationEventLogEF.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\HealthChecks\src\Microsoft.AspNetCore.HealthChecks\Microsoft.AspNetCore.HealthChecks.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks.AzureStorage\Microsoft.Extensions.HealthChecks.AzureStorage.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks.SqlServer\Microsoft.Extensions.HealthChecks.SqlServer.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\HealthChecks\src\Microsoft.Extensions.HealthChecks\Microsoft.Extensions.HealthChecks.csproj" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\WebHostCustomization\WebHost.Customization\WebHost.Customization.csproj" />
+    <ProjectReference Include="..\Buying.Domain\Buying.Domain.csproj" />
+    <ProjectReference Include="..\Buying.Infrastructure\Buying.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

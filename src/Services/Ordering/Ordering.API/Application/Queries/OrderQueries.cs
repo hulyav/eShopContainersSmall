@@ -57,15 +57,15 @@
             }
         }
 
-        public async Task<IEnumerable<CardType>> GetCardTypesAsync()
-        {
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
+        //public async Task<IEnumerable<CardType>> GetCardTypesAsync()
+        //{
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        connection.Open();
 
-                return await connection.QueryAsync<CardType>("SELECT * FROM ordering.cardtypes");
-            }
-        }
+        //        return await connection.QueryAsync<CardType>("SELECT * FROM ordering.cardtypes");
+        //    }
+        //}
 
         private Order MapOrderItems(dynamic result)
         {

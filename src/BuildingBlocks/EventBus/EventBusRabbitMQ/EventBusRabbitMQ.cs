@@ -186,8 +186,15 @@ namespace Microsoft.eShopOnContainers.BuildingBlocks.EventBusRabbitMQ
             {
                 var eventName = ea.RoutingKey;
                 var message = Encoding.UTF8.GetString(ea.Body);
+                try
+                {
+                    await ProcessEvent(eventName, message);
+                }
+                catch (Exception e) //Microsoft.EntityFrameworkCore.DbUpdateException
+                {
 
-                await ProcessEvent(eventName, message);
+                }
+                
 
                 channel.BasicAck(ea.DeliveryTag,multiple:false);
             };
